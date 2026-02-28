@@ -16,6 +16,7 @@ Public: Can access in same class, any where(inside class, even in diff packages)
 public class Student {
     public String name;
     public int age;
+    Address address; // nested object
 
     //Default Constructor
     public Student(){
@@ -29,11 +30,40 @@ public class Student {
         this.age=age;
     }
 
-    //Copy Constructor
+    //Copy Constructor :
+    /*Copy constructor is shallow copy by default. To make it a deep copy, you need to manually create new objects for all nested/reference type fields.*/
     public Student(Student s1, String name){
         System.out.println("This is Copy constructor");
         this.age=s1.age;
         this.name=name;
+    }
+
+    Student(String name, int age, Address address) {
+        this.name = name;
+        this.age = age;
+        this.address = address;
+    }
+
+   /* Shallow Copy
+    Student(Student s) {
+        this.name = s.name;
+        this.age = s.age;
+        this.address = s.address; // ⚠️ copying reference, not new object!
+    }*/
+
+    // Deep Copy Constructor
+    Student(Student s) {
+        this.name = s.name;
+        this.age = s.age;
+        this.address = new Address(s.address.city); // ✅ new object created!
+    }
+}
+
+class Address {
+    String city;
+
+    Address(String city) {
+        this.city = city;
     }
 }
 
@@ -56,5 +86,19 @@ class Main {
 
 
         System.out.println("Copy Constructor :" + s3.name + " " + s3.age);
+
+
+
+        Address addr = new Address("Pune");
+        Student st1 = new Student("Rahul", 20, addr);
+        Student st2 = new Student(st1); // deep copy
+
+        s2.address.city = "Mumbai"; // changing s2
+
+        System.out.println(st1.address.city); // Pune ✅ s1 not affected!
+        System.out.println(st2.address.city); // Mumbai ✅
     }
 }
+
+/*Shallow Copy — copies the object but shares the reference of nested objects. Changes in one object affect the other.
+Deep Copy — copies the object and also creates new copies of nested objects. Both objects are completely independent.*/
