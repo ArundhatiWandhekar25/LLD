@@ -1,4 +1,4 @@
-package com.arundhati.lld.MutliThreading.Mutex;
+package com.arundhati.lld.MutliThreading.Mutex.SynchronisedKeyword;
 
 import java.util.concurrent.Callable;
 

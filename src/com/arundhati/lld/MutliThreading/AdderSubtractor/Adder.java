@@ -15,10 +15,10 @@ public class Adder implements Callable<Void>{
     @Override
     public Void call() throws Exception{
         for(int i=1;i<=100;i++){
-            lock.lock();
-            v.value +=i;
-            System.out.println("Adder lock" + Thread.currentThread());
-            lock.unlock();
+            synchronized(v){
+                v.value +=i;
+                System.out.println("Adder lock" + Thread.currentThread());
+            }
         }
         return null;
     }

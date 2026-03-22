@@ -14,11 +14,11 @@ public class Subtractor implements Callable<Void> {
 
     @Override
     public Void call() throws  Exception{
-        for(int i=1;i<=100;i++){
-            lock.lock();
-            v.value -=i;
-            System.out.println("Suntractor lock" + Thread.currentThread());
-            lock.unlock();
+        for(int i=1;i<=5000;i++) {
+            synchronized (v) {
+                v.value -= i;
+                System.out.println("Subtractor lock" + Thread.currentThread());
+            }
         }
         return null;
     }
