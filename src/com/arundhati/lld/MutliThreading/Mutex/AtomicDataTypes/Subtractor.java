@@ -1,4 +1,4 @@
-package com.arundhati.lld.MutliThreading.AdderSubtractor;
+package com.arundhati.lld.MutliThreading.Mutex.AtomicDataTypes;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.locks.Lock;
@@ -16,8 +16,8 @@ public class Subtractor implements Callable<Void> {
     public Void call() throws  Exception{
         for(int i=1;i<=500;i++) {
             synchronized (v) {
-                v.value -= i;
-                System.out.println("Subtractor lock" + Thread.currentThread());
+                this.v.atomicInteger.decrementAndGet();
+                //System.out.println("Subtractor lock" + Thread.currentThread());
             }
         }
         return null;
